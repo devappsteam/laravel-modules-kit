@@ -1,0 +1,11 @@
+<p>Add your module fields here.</p>
+
+<div>
+    <label for="uuid">UUID</label>
+    <input
+        id="uuid"
+        name="uuid"
+        type="text"
+        value="{{ '{{' }} old('uuid', ${{MODULE_LOWER}}->uuid ?? '') {{ '}}' }}"
+    >
+</div>

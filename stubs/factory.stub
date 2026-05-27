@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Modules\{{MODULE}}\Database\Factories;
+
+use App\Modules\{{MODULE}}\Models\{{MODULE}};
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+
+class {{MODULE}}Factory extends Factory
+{
+    protected $model = {{MODULE}}::class;
+
+    public function definition(): array
+    {
+        return [
+            'uuid' => (string) Str::uuid(),
+        ];
+    }
+}

@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Modules\{{MODULE}}\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use App\Modules\{{MODULE}}\Http\Requests\Store{{MODULE}}Request;
+use App\Modules\{{MODULE}}\Http\Requests\Update{{MODULE}}Request;
+use App\Modules\{{MODULE}}\Http\Resources\{{MODULE}}Resource;
+use App\Modules\{{MODULE}}\Services\{{MODULE}}Service;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use RuntimeException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+class {{MODULE}}Controller extends Controller
+{
+    public function __construct(protected {{MODULE}}Service $service)
+    {
+    }
+
+    public function index(): AnonymousResourceCollection
+    {
+        ${{MODULE_LOWER_PLURAL}} = $this->service->paginate(
+            perPage: request()->integer('per_page', (int) config('modules.{{MODULE_KEBAB}}.pagination.per_page', 15))
+        );
+
+        return {{MODULE}}Resource::collection(${{MODULE_LOWER_PLURAL}});
+    }
+
+    public function store(Store{{MODULE}}Request $request): JsonResponse
+    {
+        ${{MODULE_LOWER}} = $this->service->create($request->validated());
+
+        return (new {{MODULE}}Resource(${{MODULE_LOWER}}))
+            ->response()
+            ->setStatusCode(201);
+    }
+
+    public function show(string $uuid): {{MODULE}}Resource
+    {
+        return new {{MODULE}}Resource($this->findOrFail($uuid));
+    }
+
+    public function update(Update{{MODULE}}Request $request, string $uuid): {{MODULE}}Resource
+    {
+        ${{MODULE_LOWER}} = $this->findOrFail($uuid);
+        $updated = $this->service->update(${{MODULE_LOWER}}, $request->validated());
+
+        if (!$updated) {
+            throw new RuntimeException('Failed to update {{MODULE_LOWER}}.');
+        }
+
+        return new {{MODULE}}Resource(${{MODULE_LOWER}}->refresh());
+    }
+
+    public function destroy(string $uuid): JsonResponse
+    {
+        ${{MODULE_LOWER}} = $this->findOrFail($uuid);
+        $deleted = $this->service->delete(${{MODULE_LOWER}});
+
+        if (!$deleted) {
+            throw new RuntimeException('Failed to delete {{MODULE_LOWER}}.');
+        }
+
+        return response()->json(status: 204);
+    }
+
+    protected function findOrFail(string $uuid)
+    {
+        ${{MODULE_LOWER}} = $this->service->findByUuid($uuid);
+
+        if (!${{MODULE_LOWER}}) {
+            throw new NotFoundHttpException('{{MODULE}} not found.');
+        }
+
+        return ${{MODULE_LOWER}};
+    }
+}

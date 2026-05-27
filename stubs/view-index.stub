@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{MODULE_PLURAL}}</title>
+</head>
+<body>
+    <h1>{{MODULE_PLURAL}}</h1>
+
+    <p><a href="{{ '{{' }} route('{{MODULE_KEBAB_PLURAL}}.create') {{ '}}' }}">Create {{MODULE}}</a></p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>UUID</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse (${{MODULE_LOWER_PLURAL}} as ${{MODULE_LOWER}})
+                <tr>
+                    <td>{{ '{{' }} ${{MODULE_LOWER}}->uuid {{ '}}' }}</td>
+                    <td>
+                        <a href="{{ '{{' }} route('{{MODULE_KEBAB_PLURAL}}.show', ${{MODULE_LOWER}}->uuid) {{ '}}' }}">Show</a>
+                        <a href="{{ '{{' }} route('{{MODULE_KEBAB_PLURAL}}.edit', ${{MODULE_LOWER}}->uuid) {{ '}}' }}">Edit</a>
+                        <form method="POST" action="{{ '{{' }} route('{{MODULE_KEBAB_PLURAL}}.destroy', ${{MODULE_LOWER}}->uuid) {{ '}}' }}" style="display:inline">
+                            {{ '{{' }} csrf_field() {{ '}}' }}
+                            {{ '{{' }} method_field('DELETE') {{ '}}' }}
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="2">No records found.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+
+    <div>
+        {{ '{{' }} ${{MODULE_LOWER_PLURAL}}->links() {{ '}}' }}
+    </div>
+</body>
+</html>

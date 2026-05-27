@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Modules\{{MODULE}}\Providers;
+
+use App\Modules\{{MODULE}}\Models\{{MODULE}};
+use App\Modules\{{MODULE}}\Policies\{{MODULE}}Policy;
+use App\Modules\{{MODULE}}\Repositories\Contracts\{{MODULE}}RepositoryInterface;
+use App\Modules\{{MODULE}}\Repositories\{{MODULE}}Repository;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\ServiceProvider;
+
+class {{MODULE}}ServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        $this->app->bind({{MODULE}}RepositoryInterface::class, {{MODULE}}Repository::class);
+    }
+
+    public function boot(): void
+    {
+        Gate::policy({{MODULE}}::class, {{MODULE}}Policy::class);
+    }
+}

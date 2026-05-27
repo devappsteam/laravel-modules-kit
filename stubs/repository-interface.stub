@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Modules\{{MODULE}}\Repositories\Contracts;
+
+use DevApps\LaravelModulesKit\Contracts\RepositoryInterface;
+
+interface {{MODULE}}RepositoryInterface extends RepositoryInterface
+{
+}

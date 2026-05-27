@@ -1,0 +1,142 @@
+<?php
+
+namespace App\Modules\{{MODULE}}\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use App\Modules\{{MODULE}}\Http\Requests\Store{{MODULE}}Request;
+use App\Modules\{{MODULE}}\Http\Requests\Update{{MODULE}}Request;
+use App\Modules\{{MODULE}}\Http\Resources\{{MODULE}}Resource;
+use App\Modules\{{MODULE}}\Services\{{MODULE}}Service;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\View\View;
+use RuntimeException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+class {{MODULE}}Controller extends Controller
+{
+    public function __construct(protected {{MODULE}}Service $service)
+    {
+    }
+
+    public function index(Request $request): View|AnonymousResourceCollection
+    {
+        ${{MODULE_LOWER_PLURAL}} = $this->service->paginate(
+            perPage: $request->integer('per_page', (int) config('modules.{{MODULE_KEBAB}}.pagination.per_page', 15))
+        );
+
+        if ($this->expectsJson($request)) {
+            return {{MODULE}}Resource::collection(${{MODULE_LOWER_PLURAL}});
+        }
+
+        return view('{{MODULE_KEBAB}}::index', [
+            '{{MODULE_LOWER_PLURAL}}' => ${{MODULE_LOWER_PLURAL}},
+        ]);
+    }
+
+    public function create(Request $request): View|JsonResponse
+    {
+        if ($this->expectsJson($request)) {
+            return response()->json([
+                'message' => 'Create form is only available for Blade responses.',
+            ], 405);
+        }
+
+        return view('{{MODULE_KEBAB}}::create');
+    }
+
+    public function store(Store{{MODULE}}Request $request): RedirectResponse|JsonResponse
+    {
+        ${{MODULE_LOWER}} = $this->service->create($request->validated());
+
+        if ($this->expectsJson($request)) {
+            return (new {{MODULE}}Resource(${{MODULE_LOWER}}))
+                ->response()
+                ->setStatusCode(201);
+        }
+
+        return redirect()
+            ->route('{{MODULE_KEBAB_PLURAL}}.show', ${{MODULE_LOWER}}->uuid)
+            ->with('success', '{{MODULE}} created successfully.');
+    }
+
+    public function show(Request $request, string $uuid): View|{{MODULE}}Resource
+    {
+        ${{MODULE_LOWER}} = $this->findOrFail($uuid);
+
+        if ($this->expectsJson($request)) {
+            return new {{MODULE}}Resource(${{MODULE_LOWER}});
+        }
+
+        return view('{{MODULE_KEBAB}}::show', [
+            '{{MODULE_LOWER}}' => ${{MODULE_LOWER}},
+        ]);
+    }
+
+    public function edit(Request $request, string $uuid): View|JsonResponse
+    {
+        if ($this->expectsJson($request)) {
+            return response()->json([
+                'message' => 'Edit form is only available for Blade responses.',
+            ], 405);
+        }
+
+        return view('{{MODULE_KEBAB}}::edit', [
+            '{{MODULE_LOWER}}' => $this->findOrFail($uuid),
+        ]);
+    }
+
+    public function update(Update{{MODULE}}Request $request, string $uuid): RedirectResponse|{{MODULE}}Resource
+    {
+        ${{MODULE_LOWER}} = $this->findOrFail($uuid);
+        $updated = $this->service->update(${{MODULE_LOWER}}, $request->validated());
+
+        if (!$updated) {
+            throw new RuntimeException('Failed to update {{MODULE_LOWER}}.');
+        }
+
+        if ($this->expectsJson($request)) {
+            return new {{MODULE}}Resource(${{MODULE_LOWER}}->refresh());
+        }
+
+        return redirect()
+            ->route('{{MODULE_KEBAB_PLURAL}}.show', ${{MODULE_LOWER}}->uuid)
+            ->with('success', '{{MODULE}} updated successfully.');
+    }
+
+    public function destroy(Request $request, string $uuid): RedirectResponse|JsonResponse
+    {
+        ${{MODULE_LOWER}} = $this->findOrFail($uuid);
+        $deleted = $this->service->delete(${{MODULE_LOWER}});
+
+        if (!$deleted) {
+            throw new RuntimeException('Failed to delete {{MODULE_LOWER}}.');
+        }
+
+        if ($this->expectsJson($request)) {
+            return response()->json(status: 204);
+        }
+
+        return redirect()
+            ->route('{{MODULE_KEBAB_PLURAL}}.index')
+            ->with('success', '{{MODULE}} deleted successfully.');
+    }
+
+    protected function expectsJson(Request $request): bool
+    {
+        return $request->expectsJson() || $request->isJson();
+    }
+
+    protected function findOrFail(string $uuid)
+    {
+        ${{MODULE_LOWER}} = $this->service->findByUuid($uuid);
+
+        if (!${{MODULE_LOWER}}) {
+            throw new NotFoundHttpException('{{MODULE}} not found.');
+        }
+
+        return ${{MODULE_LOWER}};
+    }
+}

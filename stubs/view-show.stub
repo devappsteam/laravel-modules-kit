@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{MODULE}} details</title>
+</head>
+<body>
+    <h1>{{MODULE}} details</h1>
+
+    <dl>
+        <dt>UUID</dt>
+        <dd>{{ '{{' }} ${{MODULE_LOWER}}->uuid {{ '}}' }}</dd>
+        <dt>Created at</dt>
+        <dd>{{ '{{' }} ${{MODULE_LOWER}}->created_at {{ '}}' }}</dd>
+    </dl>
+
+    <p><a href="{{ '{{' }} route('{{MODULE_KEBAB_PLURAL}}.edit', ${{MODULE_LOWER}}->uuid) {{ '}}' }}">Edit</a></p>
+    <p><a href="{{ '{{' }} route('{{MODULE_KEBAB_PLURAL}}.index') {{ '}}' }}">Back</a></p>
+</body>
+</html>

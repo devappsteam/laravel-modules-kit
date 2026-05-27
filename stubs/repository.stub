@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Modules\{{MODULE}}\Repositories;
+
+use App\Modules\{{MODULE}}\Models\{{MODULE}};
+use App\Modules\{{MODULE}}\Repositories\Contracts\{{MODULE}}RepositoryInterface;
+use DevApps\LaravelModulesKit\Support\BaseRepository;
+
+class {{MODULE}}Repository extends BaseRepository implements {{MODULE}}RepositoryInterface
+{
+    public function __construct({{MODULE}} $model)
+    {
+        parent::__construct($model);
+    }
+}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit {{MODULE}}</title>
+</head>
+<body>
+    <h1>Edit {{MODULE}}</h1>
+
+    <form method="POST" action="{{ '{{' }} route('{{MODULE_KEBAB_PLURAL}}.update', ${{MODULE_LOWER}}->uuid) {{ '}}' }}">
+        {{ '{{' }} csrf_field() {{ '}}' }}
+        {{ '{{' }} method_field('PUT') {{ '}}' }}
+        @include('{{MODULE_KEBAB}}::partials.form', ['{{MODULE_LOWER}}' => ${{MODULE_LOWER}}])
+        <button type="submit">Update</button>
+    </form>
+
+    <p><a href="{{ '{{' }} route('{{MODULE_KEBAB_PLURAL}}.show', ${{MODULE_LOWER}}->uuid) {{ '}}' }}">Back</a></p>
+</body>
+</html>

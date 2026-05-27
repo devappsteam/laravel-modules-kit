@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Modules\{{MODULE}}\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
+
+class {{MODULE}} extends Model
+{
+    use HasFactory;
+    use SoftDeletes;
+
+    protected $table = '{{TABLE_NAME}}';
+
+    protected $fillable = [
+        'uuid',
+    ];
+
+    protected $hidden = [
+        'id',
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
+    ];
+
+    protected static function booted(): void
+    {
+        static::creating(function (self $model): void {
+            if (!$model->uuid) {
+                $model->uuid = (string) Str::uuid();
+            }
+        });
+    }
+}

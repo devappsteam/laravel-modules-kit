@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create {{MODULE}}</title>
+</head>
+<body>
+    <h1>Create {{MODULE}}</h1>
+
+    <form method="POST" action="{{ '{{' }} route('{{MODULE_KEBAB_PLURAL}}.store') {{ '}}' }}">
+        {{ '{{' }} csrf_field() {{ '}}' }}
+        @include('{{MODULE_KEBAB}}::partials.form')
+        <button type="submit">Save</button>
+    </form>
+
+    <p><a href="{{ '{{' }} route('{{MODULE_KEBAB_PLURAL}}.index') {{ '}}' }}">Back</a></p>
+</body>
+</html>

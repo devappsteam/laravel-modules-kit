@@ -1,0 +1,12 @@
+<?php
+
+return [
+    'enabled' => env('{{MODULE_UPPER}}_MODULE_ENABLED', true),
+    'pagination' => [
+        'per_page' => env('{{MODULE_UPPER}}_PER_PAGE', 15),
+        'max_per_page' => env('{{MODULE_UPPER}}_MAX_PER_PAGE', 100),
+    ],
+    'views' => [
+        'namespace' => '{{MODULE_KEBAB}}',
+    ],
+];
