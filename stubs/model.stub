@@ -5,12 +5,13 @@ namespace App\Modules\{{MODULE}}\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
+use DevApps\LaravelModulesKit\Traits\Uuid;
 
 class {{MODULE}} extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use Uuid;
 
     protected $table = '{{TABLE_NAME}}';
 
@@ -27,13 +28,4 @@ class {{MODULE}} extends Model
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
-
-    protected static function booted(): void
-    {
-        static::creating(function (self $model): void {
-            if (!$model->uuid) {
-                $model->uuid = (string) Str::uuid();
-            }
-        });
-    }
 }
