@@ -28,6 +28,23 @@ Add a path repository in the host Laravel project's `composer.json`:
         "devapps/laravel-modules-kit": "dev-main"
     }
 }
+
+
+
+---- BY GITHUB
+
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/devappsteam/laravel-modules-kit.git",
+        }
+    ],
+    "require": {
+        "devapps/laravel-modules-kit": "^1.0.0"
+    }
+}
+
 ```
 
 Then run:
