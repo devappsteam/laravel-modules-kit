@@ -3,7 +3,7 @@
     "name": "devapps/laravel-modules-kit",
     "description": "Laravel module generator and runtime loader for API, Blade, or hybrid modules.",
     "type": "library",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "license": "MIT",
     "keywords": [
         "laravel",
