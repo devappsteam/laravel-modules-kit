@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\{{MODULE}}\Providers;
+namespace App\Modules\{{MODULE_NAMESPACE}}\Providers;
 
-use App\Modules\{{MODULE}}\Models\{{MODULE}};
-use App\Modules\{{MODULE}}\Policies\{{MODULE}}Policy;
-use App\Modules\{{MODULE}}\Repositories\Contracts\{{MODULE}}RepositoryInterface;
-use App\Modules\{{MODULE}}\Repositories\{{MODULE}}Repository;
+use App\Modules\{{MODULE_NAMESPACE}}\Models\{{MODULE}};
+use App\Modules\{{MODULE_NAMESPACE}}\Policies\{{MODULE}}Policy;
+use App\Modules\{{MODULE_NAMESPACE}}\Repositories\Contracts\{{MODULE}}RepositoryInterface;
+use App\Modules\{{MODULE_NAMESPACE}}\Repositories\{{MODULE}}Repository;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 

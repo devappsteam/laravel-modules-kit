@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modules\{{MODULE}}\Repositories;
+namespace App\Modules\{{MODULE_NAMESPACE}}\Repositories;
 
-use App\Modules\{{MODULE}}\Models\{{MODULE}};
-use App\Modules\{{MODULE}}\Repositories\Contracts\{{MODULE}}RepositoryInterface;
+use App\Modules\{{MODULE_NAMESPACE}}\Models\{{MODULE}};
+use App\Modules\{{MODULE_NAMESPACE}}\Repositories\Contracts\{{MODULE}}RepositoryInterface;
 use DevApps\LaravelModulesKit\Support\BaseRepository;
 
 class {{MODULE}}Repository extends BaseRepository implements {{MODULE}}RepositoryInterface

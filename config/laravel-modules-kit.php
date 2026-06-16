@@ -29,7 +29,7 @@ return [
     ],
 
     'generator' => [
-        'default_type' => 'hybrid',
+        'default_type' => 'api',
         'stubs_path' => env('LARAVEL_MODULES_KIT_STUBS_PATH', 'stubs/vendor/laravel-modules-kit'),
     ],
 ];

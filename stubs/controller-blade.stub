@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\{{MODULE}}\Http\Controllers;
+namespace App\Modules\{{MODULE_NAMESPACE}}\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\{{MODULE}}\Http\Requests\Store{{MODULE}}Request;
-use App\Modules\{{MODULE}}\Http\Requests\Update{{MODULE}}Request;
-use App\Modules\{{MODULE}}\Services\{{MODULE}}Service;
+use App\Modules\{{MODULE_NAMESPACE}}\Http\Requests\Store{{MODULE}}Request;
+use App\Modules\{{MODULE_NAMESPACE}}\Http\Requests\Update{{MODULE}}Request;
+use App\Modules\{{MODULE_NAMESPACE}}\Services\{{MODULE}}Service;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

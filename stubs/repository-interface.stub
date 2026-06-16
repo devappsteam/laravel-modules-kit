@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\{{MODULE}}\Repositories\Contracts;
+namespace App\Modules\{{MODULE_NAMESPACE}}\Repositories\Contracts;
 
 use DevApps\LaravelModulesKit\Contracts\RepositoryInterface;
 

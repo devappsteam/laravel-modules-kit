@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\{{MODULE}}\Services;
+namespace App\Modules\{{MODULE_NAMESPACE}}\Services;
 
-use App\Modules\{{MODULE}}\Repositories\Contracts\{{MODULE}}RepositoryInterface;
+use App\Modules\{{MODULE_NAMESPACE}}\Repositories\Contracts\{{MODULE}}RepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;

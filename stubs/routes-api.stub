@@ -1,6 +1,6 @@
 <?php
 
-use App\Modules\{{MODULE}}\Http\Controllers\{{MODULE}}Controller;
+use App\Modules\{{MODULE_NAMESPACE}}\Http\Controllers\{{MODULE}}Controller;
 use Illuminate\Support\Facades\Route;
 
 Route::apiResource('{{MODULE_KEBAB_PLURAL}}', {{MODULE}}Controller::class)
