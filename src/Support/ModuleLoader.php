@@ -14,7 +14,8 @@ class ModuleLoader
     public function __construct(
         protected Application $app,
         protected ConfigRepository $config
-    ) {}
+    ) {
+    }
 
     public function registerModules(): void
     {
@@ -51,7 +52,7 @@ class ModuleLoader
             '/'
         ));
 
-        if (! File::exists($basePath)) {
+        if (!File::exists($basePath)) {
             return [];
         }
 
@@ -111,19 +112,19 @@ class ModuleLoader
     protected function configKeyFromRelPath(string $relPath): string
     {
         return implode('.', array_map(
-            fn ($s) => Str::kebab($s),
+            fn($s) => Str::kebab($s),
             explode('/', $relPath)
         ));
     }
 
     protected function registerModuleProvider(string $moduleRelPath, string $modulePath): void
     {
-        if (! $this->config->get('laravel-modules-kit.runtime.register_module_providers', true)) {
+        if (!$this->config->get('laravel-modules-kit.runtime.register_module_providers', true)) {
             return;
         }
 
-        $moduleName    = basename($modulePath);
-        $nsRelPath     = $this->namespaceFromRelPath($moduleRelPath);
+        $moduleName = basename($modulePath);
+        $nsRelPath = $this->namespaceFromRelPath($moduleRelPath);
         $baseNamespace = trim($this->config->get('laravel-modules-kit.namespace', 'App\\Modules'), '\\');
 
         $providerClass = sprintf(
@@ -140,26 +141,26 @@ class ModuleLoader
 
     protected function loadModuleConfig(string $moduleRelPath, string $modulePath): void
     {
-        if (! $this->config->get('laravel-modules-kit.runtime.load_configs', true)) {
+        if (!$this->config->get('laravel-modules-kit.runtime.load_configs', true)) {
             return;
         }
 
         $configPath = $modulePath . '/Config';
 
-        if (! File::exists($configPath)) {
+        if (!File::exists($configPath)) {
             return;
         }
 
         $moduleKey = $this->configKeyFromRelPath($moduleRelPath);
 
         foreach (File::files($configPath) as $configFile) {
-            $fileName  = $configFile->getFilenameWithoutExtension();
+            $fileName = $configFile->getFilenameWithoutExtension();
             $configKey = $fileName === 'module'
                 ? "modules.{$moduleKey}"
                 : "modules.{$moduleKey}.{$fileName}";
 
             $current = $this->config->get($configKey, []);
-            $loaded  = require $configFile->getPathname();
+            $loaded = require $configFile->getPathname();
 
             $this->config->set(
                 $configKey,
@@ -170,13 +171,13 @@ class ModuleLoader
 
     protected function loadModuleRoutes(string $modulePath): void
     {
-        if (! $this->config->get('laravel-modules-kit.runtime.load_routes', true)) {
+        if (!$this->config->get('laravel-modules-kit.runtime.load_routes', true)) {
             return;
         }
 
         $routesPath = $modulePath . '/Routes';
 
-        if (! File::exists($routesPath)) {
+        if (!File::exists($routesPath)) {
             return;
         }
 
@@ -191,7 +192,7 @@ class ModuleLoader
         $apiRoutesFile = $routesPath . '/api.php';
         if (File::exists($apiRoutesFile)) {
             $prefix = trim((string) $this->config->get('laravel-modules-kit.api.prefix', 'api/v1'), '/');
-            $route  = Route::middleware($this->config->get('laravel-modules-kit.api.middleware', ['api']));
+            $route = Route::middleware($this->config->get('laravel-modules-kit.api.middleware', ['api']));
 
             if ($prefix !== '') {
                 $route = $route->prefix($prefix);
@@ -205,7 +206,7 @@ class ModuleLoader
 
     protected function loadModuleMigrations(LaravelModulesKitServiceProvider $provider, string $modulePath): void
     {
-        if (! $this->config->get('laravel-modules-kit.runtime.load_migrations', true)) {
+        if (!$this->config->get('laravel-modules-kit.runtime.load_migrations', true)) {
             return;
         }
 
@@ -221,27 +222,28 @@ class ModuleLoader
         string $moduleRelPath,
         string $modulePath
     ): void {
-        if (! $this->config->get('laravel-modules-kit.runtime.load_views', true)) {
+        if (!$this->config->get('laravel-modules-kit.runtime.load_views', true)) {
             return;
         }
 
         $viewsPath = $modulePath . '/Resources/views';
 
-        if (! File::exists($viewsPath)) {
+        if (!File::exists($viewsPath)) {
             return;
         }
 
-        $moduleName    = basename($modulePath);
+        $moduleName = basename($modulePath);
         $overridesBase = trim(
             $this->config->get('laravel-modules-kit.paths.views_overrides', 'resources/views/modules'),
             '/'
         );
 
         // Namespace uses kebab-cased relative path: "erp/companies" → "erp-companies"
-        $viewNamespace = implode('-', array_map(
-            fn ($s) => Str::kebab($s),
-            explode('/', $moduleRelPath)
-        ));
+        $viewNamespace = implode('-', array_map(function ($segment) {
+            return ctype_upper($segment)
+                ? strtolower($segment)
+                : Str::kebab($segment);
+        }, explode('/', $moduleRelPath)));
 
         $overridePath = resource_path($overridesBase . '/' . $moduleName);
 
@@ -253,13 +255,13 @@ class ModuleLoader
         string $moduleRelPath,
         string $modulePath
     ): void {
-        if (! $this->config->get('laravel-modules-kit.runtime.publish_module_configs', true)) {
+        if (!$this->config->get('laravel-modules-kit.runtime.publish_module_configs', true)) {
             return;
         }
 
         $configPath = $modulePath . '/Config';
 
-        if (! File::exists($configPath)) {
+        if (!File::exists($configPath)) {
             return;
         }
 
