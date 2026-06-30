@@ -157,3 +157,73 @@ The package config lets you customize:
 * The default API prefix is `api/v1`
 * Blade view overrides are read from `resources/views/modules/<ModuleName>`
 * The default module namespace is `App\Modules`
+
+## Blade views
+
+For **blade** and **hybrid** modules, views are automatically registered with a namespace based on the module path.
+
+### Examples
+
+Module:
+
+```text
+app/Modules/Billing
+```
+
+View:
+
+```text
+app/Modules/Billing/Resources/views/index.blade.php
+```
+
+Usage:
+
+```php
+return view('billing::index');
+```
+
+Module:
+
+```text
+app/Modules/ERP/Customer
+```
+
+View:
+
+```text
+app/Modules/ERP/Customer/Resources/views/index.blade.php
+```
+
+Usage:
+
+```php
+return view('erp-customer::index');
+```
+
+Views inside subdirectories use dot notation:
+
+```text
+app/Modules/ERP/Customer/Resources/views/customers/create.blade.php
+```
+
+Usage:
+
+```php
+return view('erp-customer::customers.create');
+```
+
+### View overrides
+
+Module views can be overridden by placing Blade files in:
+
+```text
+resources/views/modules/<ModuleName>
+```
+
+For example, the following file overrides the `index` view of the `Customer` module:
+
+```text
+resources/views/modules/Customer/index.blade.php
+```
+
+When an override exists, Laravel will automatically load it instead of the module's original view.
